@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function LogInPage() {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
-
+  const onLogInHandler = () => {};
   return (
     <div>
       <label>name:</label>
@@ -18,13 +19,16 @@ export default function LogInPage() {
         value={room}
         onChange={(e) => setRoom(e.target.value)}
       />
-      <button
-        onClick={(e) => {
-          setRoom("");
-          setName("");
-        }}
-      >
-        Go
+      <button>
+        <Link
+          to={`/room?name=${name}&room=${room}`}
+          onClick={(e) => {
+            setRoom("");
+            setName("");
+          }}
+        >
+          Go
+        </Link>
       </button>
     </div>
   );
