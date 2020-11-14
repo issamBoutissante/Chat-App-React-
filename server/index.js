@@ -1,7 +1,12 @@
 const http = require("http");
-const { on } = require("process");
 const { Socket } = require("socket.io");
 const app = require("express")();
+const {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom,
+} = require("./manageUsers");
 const server = http.createServer();
 const io = require("socket.io")(server, {
   cors: {
@@ -11,13 +16,32 @@ const io = require("socket.io")(server, {
     credentials: true,
   },
 });
+
 const PORT = process.env.PORT || "5000";
 io.on("connection", (socket) => {
-  //socket.to(socket.room).on("message",()=>{
-
-  // })
-  console.log("connection has been started");
-  socket.on("newUser", (data) => {});
+  socket.on("join", ({ room, name }, callback) => {
+    const { error, user } = addUser({ id: socket.id, room, name });
+    if (error) {
+      callback({ error });
+      return;
+    }
+    socket.emit("message", {
+      userName: "everyBody",
+      text: `hello ${user.name} ,you are welcome in our group 💙`,
+    });
+    socket.join(user.room);
+    socket.broadcast.to(user.room).emit("message", {
+      userName: user.name,
+      text: `${user.name} has been joind the group`,
+    });
+  });
+  socket.on("sendMessage", (message) => {
+    const user = getUser(socket.id);
+    io.to(user.room).emit("message", { userName: user.name, text: message });
+  });
+  socket.on("disconnect", () => {
+    removeUser(socket.id);
+  });
 });
 server.listen(PORT, () => {
   console.log("listening has been started ....");
