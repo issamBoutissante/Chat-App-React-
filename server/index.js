@@ -1,4 +1,5 @@
 const http = require("http");
+const { emit } = require("process");
 const { Socket } = require("socket.io");
 const app = require("express")();
 const {
@@ -41,7 +42,15 @@ io.on("connection", (socket) => {
     io.to(user.room).emit("message", { userName: user.name, text: message });
   });
   socket.on("disconnect", () => {
-    removeUser(socket.id);
+    const { user, error } = getUser(socket.id);
+    if (user) {
+      io.to(user.room).emit("message", {
+        userName: user.name,
+        text: `${user.name} has left the group`,
+      });
+      socket.leave(user.room);
+      removeUser(socket.id);
+    }
   });
 });
 server.listen(PORT, () => {

@@ -1,6 +1,7 @@
 * {
   --lines: rgb(0, 140, 255);
   --bac: white;
+  user-select: none;
 }
 .layout {
   width: 100vw;

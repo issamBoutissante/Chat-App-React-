@@ -38,16 +38,21 @@ header span {
 }
 .name {
   flex-grow: 1;
+  border-left: 0;
+  font-size: 20px;
 }
 .room {
   flex-grow: 4;
 }
 .close {
   flex-grow: 1;
+  border: 0;
+  border-left: 1px solid var(--lines);
+  font-size: 20px;
+  box-sizing: border-box;
 }
 .close:hover {
   flex-grow: 1;
-  border: 1px solid rgba(255, 49, 21, 0.863);
   background-color: rgba(255, 49, 21, 0.863);
   color: white;
 }
@@ -55,7 +60,20 @@ header span {
   width: 100%;
   height: 70%;
   box-sizing: border-box;
+  overflow: scroll;
 }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--lines);
+}
+
 .writing_messages_area {
   width: 100%;
   height: 30%;
@@ -98,9 +116,21 @@ header span {
 .messageStyle {
   list-style: none;
   margin: 3%;
+  margin-right: 50px;
   padding: 3%;
   border: 1px solid var(--lines);
   border-radius: 5px;
   box-sizing: border-box;
   color: var(--lines);
+}
+.UserMessageStyle {
+  list-style: none;
+  margin: 3%;
+  margin-left: 50px;
+  padding: 3%;
+  background-color: var(--lines);
+  border: 1px solid var(--bac);
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: var(--bac);
 }

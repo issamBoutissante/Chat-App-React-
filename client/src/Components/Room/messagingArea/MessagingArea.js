@@ -19,8 +19,8 @@ const MessaginArea = ({
         <span className="close">Close</span>
       </header>
       <form>
-        <section className="messages_area" style={{ overflow: "scroll" }}>
-          <Messages messages={messages} />
+        <section className="messages_area">
+          <Messages name={name} messages={messages} />
         </section>
         <section className="writing_messages_area">
           <input
@@ -29,7 +29,15 @@ const MessaginArea = ({
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={(e) => (e.key === "Enter" ? e.preventDefault() : null)}
           />
-          <span onClick={sendMessage}>Send</span>
+          <span
+            onClick={(e) => {
+              if (message) {
+                sendMessage();
+              }
+            }}
+          >
+            Send
+          </span>
         </section>
       </form>
     </Layout>

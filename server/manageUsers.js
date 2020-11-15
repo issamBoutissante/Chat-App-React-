@@ -16,8 +16,10 @@ const getUser = (id) => {
   return { user };
 };
 const removeUser = (id) => {
-  const index = users.indexOf((user) => user.id === id);
-  if (index !== -1) return users.splice(index, 1)[0];
+  const user = users.find((user) => user.id === id);
+  console.log(user);
+  const index = users.indexOf(user);
+  if (index !== -1) return users.splice(index, 1);
 };
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 

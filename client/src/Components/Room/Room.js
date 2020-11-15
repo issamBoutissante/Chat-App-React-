@@ -16,20 +16,23 @@ export default function Room({ location }) {
     socket = io("http://localhost:5000");
     socket.emit("join", { name, room }, ({ error }) => {
       window.location.href = "/";
-      alert(error);
     });
   }, [location.search]);
   useEffect(() => {
     socket.on("message", (message) => {
       setMessages([...messages, message]);
+      return () => {
+        socket.emit("disconnect");
+      };
     });
   }, [messages]);
   const sendMessage = (e) => {
     socket.emit("sendMessage", message, ({ error }) => {
       window.location.href = "/";
-      alert(error);
     });
     setMessage("");
+    const input = document.querySelector("input");
+    input.focus();
   };
   return (
     <div>

@@ -1,16 +1,22 @@
-import React from "react";
-import ReactScrollDown from "react-scroll-down";
+import React, { useState } from "react";
 
-export default function Messages({ messages }) {
+export default function Messages({ messages, name }) {
   return (
-    <ul className="messages">
-      {messages.map((mes, index) => {
-        return (
-          <li className="messageStyle" key={index}>
-            {mes.text}
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <ul className="messages">
+        {messages.map((mes, index) => {
+          return (
+            <li
+              className={
+                mes.userName === name ? "UserMessageStyle" : "messageStyle"
+              }
+              key={index}
+            >
+              {mes.text}
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 }
