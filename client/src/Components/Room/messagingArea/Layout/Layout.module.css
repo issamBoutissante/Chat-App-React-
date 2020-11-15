@@ -1,0 +1,30 @@
+* {
+  --lines: rgb(0, 140, 255);
+  --bac: white;
+}
+.layout {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.layout main {
+  width: 50%;
+  max-width: 750px;
+  height: 80%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--lines);
+  border-radius: 8px;
+  background-color: var(--bac);
+}
+
+@media (min-width: 850px) {
+  .layout main {
+    margin: 0% 35%;
+  }
+}

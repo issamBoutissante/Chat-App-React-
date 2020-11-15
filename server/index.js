@@ -35,8 +35,9 @@ io.on("connection", (socket) => {
       text: `${user.name} has been joind the group`,
     });
   });
-  socket.on("sendMessage", (message) => {
-    const user = getUser(socket.id);
+  socket.on("sendMessage", (message, callback) => {
+    const { user, error } = getUser(socket.id);
+    if (error) return callback({ error });
     io.to(user.room).emit("message", { userName: user.name, text: message });
   });
   socket.on("disconnect", () => {
